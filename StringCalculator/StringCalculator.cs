@@ -35,8 +35,8 @@ namespace StringCalculator
         {
             try
             {
-                return int.TryParse(number.Trim(), out var result) 
-                    ? result 
+                return (int.TryParse(number.Trim(), out var result) && result < 1000) 
+                    ? result
                     : 0;
             }
             catch

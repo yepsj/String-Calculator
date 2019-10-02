@@ -113,7 +113,7 @@ namespace StringCalculatorUnitTest
         }
 
         [TestMethod]
-        public void TestNegativeNumbers()
+        public void TestExceptionForNegativeNumbers()
         {
             // Arrange
             string input = "-50,100,-100,200";
@@ -136,6 +136,21 @@ namespace StringCalculatorUnitTest
             {
                 Assert.Fail();
             }
+        }
+
+        [TestMethod]
+        public void TestLargeNumbers()
+        {
+            // Arrange
+            string input = "1\n2000, 123456789,80,";
+            var expected = 81;
+            var stringCalculator = new StringCalculator.StringCalculator(input);
+
+            // Act
+            var actual = stringCalculator.CalculateSum();
+
+            // Assert
+            Assert.AreEqual(expected, actual);
         }
     }
 }
