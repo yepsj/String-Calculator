@@ -10,8 +10,11 @@ namespace StringCalculator
     {
         static void Main(string[] args)
         {
-            var stringCalculator = new StringCalculator(Console.ReadLine());
-            Console.WriteLine(stringCalculator.CalculateSum());
+            while (true)
+            {
+                var stringCalculator = new StringCalculator(Console.ReadLine());
+                Console.WriteLine(stringCalculator.CalculateSum());
+            }
         }
     }
 }

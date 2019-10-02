@@ -12,7 +12,7 @@ namespace StringCalculatorUnitTest
         {
             // Arrange
             var input = "1,2,3,4,5,6,7,8,9,10,11,12";
-            var expected = 78;
+            var expected = "1+2+3+4+5+6+7+8+9+10+11+12 = 78";
             var stringCalculator = new StringCalculator.StringCalculator(input);
 
             // Act
@@ -27,7 +27,7 @@ namespace StringCalculatorUnitTest
         {
             // Arrange
             string input = null;
-            var expected = 0;
+            var expected = "0";
             var stringCalculator = new StringCalculator.StringCalculator(input);
 
             // Act
@@ -42,7 +42,7 @@ namespace StringCalculatorUnitTest
         {
             // Arrange
             string input = "20     ,   40   ";
-            var expected = 60;
+            var expected = "20+40 = 60";
             var stringCalculator = new StringCalculator.StringCalculator(input);
 
             // Act
@@ -57,7 +57,7 @@ namespace StringCalculatorUnitTest
         {
             // Arrange
             string input = "5,tytyt";
-            var expected = 5;
+            var expected = "5+0 = 5";
             var stringCalculator = new StringCalculator.StringCalculator(input);
 
             // Act
@@ -72,7 +72,7 @@ namespace StringCalculatorUnitTest
         {
             // Arrange
             string input = "5";
-            var expected = 5;
+            var expected = "5 = 5";
             var stringCalculator = new StringCalculator.StringCalculator(input);
 
             // Act
@@ -87,7 +87,7 @@ namespace StringCalculatorUnitTest
         {
             // Arrange
             string input = "1\n2,3";
-            var expected = 6;
+            var expected = "1+2+3 = 6";
             var stringCalculator = new StringCalculator.StringCalculator(input);
 
             // Act
@@ -102,7 +102,7 @@ namespace StringCalculatorUnitTest
         {
             // Arrange
             string input = "1\n2,";
-            var expected = 3;
+            var expected = "1+2+0 = 3";
             var stringCalculator = new StringCalculator.StringCalculator(input);
 
             // Act
@@ -143,7 +143,7 @@ namespace StringCalculatorUnitTest
         {
             // Arrange
             string input = "1\n2000, 123456789,80,";
-            var expected = 81;
+            var expected = "1+0+0+80+0 = 81";
             var stringCalculator = new StringCalculator.StringCalculator(input);
 
             // Act
@@ -158,7 +158,7 @@ namespace StringCalculatorUnitTest
         {
             // Arrange
             string input = "//;\n2;5";
-            var expected = 7;
+            var expected = "0+2+5 = 7";
             var stringCalculator = new StringCalculator.StringCalculator(input);
 
             // Act
@@ -173,7 +173,7 @@ namespace StringCalculatorUnitTest
         {
             // Arrange
             string input = "//[***]\n11***22***33";
-            var expected = 66;
+            var expected = "11+22+33 = 66";
             var stringCalculator = new StringCalculator.StringCalculator(input);
 
             // Act
@@ -188,7 +188,7 @@ namespace StringCalculatorUnitTest
         {
             // Arrange
             string input = "//[((]\n11((22((33";
-            var expected = 66;
+            var expected = "11+22+33 = 66";
             var stringCalculator = new StringCalculator.StringCalculator(input);
 
             // Act
@@ -203,7 +203,7 @@ namespace StringCalculatorUnitTest
         {
             // Arrange
             string input = "//[**][((]\n11((22**33";
-            var expected = 66;
+            var expected = "11+22+33 = 66";
             var stringCalculator = new StringCalculator.StringCalculator(input);
 
             // Act
@@ -218,7 +218,7 @@ namespace StringCalculatorUnitTest
         {
             // Arrange
             string input = "//[**][((]\n11((22**33**500000**10";
-            var expected = 76;
+            var expected = "11+22+33+0+10 = 76";
             var stringCalculator = new StringCalculator.StringCalculator(input);
 
             // Act
@@ -233,7 +233,7 @@ namespace StringCalculatorUnitTest
         {
             // Arrange
             string input = "//[*][!!][r9r]\n11r9r22*33!!44";
-            var expected = 110;
+            var expected = "11+22+33+44 = 110";
             var stringCalculator = new StringCalculator.StringCalculator(input);
 
             // Act

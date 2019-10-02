@@ -19,16 +19,16 @@ namespace StringCalculator
             _input = input;
         }
 
-        public int CalculateSum()
+        public string CalculateSum()
         {
-            if (string.IsNullOrEmpty(_input)) return _defaultNumber;
-            var delimiters = _input.StartsWith("//") 
+            if (string.IsNullOrEmpty(_input)) return $"{_defaultNumber}";
+            var delimiters = _input.StartsWith(_customDelimiterFlag) 
                 ? GetCustomDelimiter()
                 : _defaultDelimiter;
             var numbers = _input.Split(delimiters, StringSplitOptions.None);
             var parsedNumbers = numbers.Select(x => ParseNumber(x)).ToList();
             CheckForNegativeNumbers(parsedNumbers);
-            return parsedNumbers.Sum();
+            return string.Join("+", parsedNumbers) + $" = {parsedNumbers.Sum()}";
         }
 
         private string[] GetCustomDelimiter()
