@@ -11,8 +11,8 @@ namespace StringCalculatorUnitTest
         public void TestHappyPath()
         {
             // Arrange
-            var input = "40,50";
-            var expected = 90;
+            var input = "1,2,3,4,5,6,7,8,9,10,11,12";
+            var expected = 78;
             var stringCalculator = new StringCalculator.StringCalculator(input);
 
             // Act
@@ -72,7 +72,22 @@ namespace StringCalculatorUnitTest
         {
             // Arrange
             string input = "5,5,1000,1000";
-            var expected = 10;
+            var expected = 2010;
+            var stringCalculator = new StringCalculator.StringCalculator(input);
+
+            // Act
+            var actual = stringCalculator.CalculateSum();
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestOneInput()
+        {
+            // Arrange
+            string input = "5";
+            var expected = 5;
             var stringCalculator = new StringCalculator.StringCalculator(input);
 
             // Act
