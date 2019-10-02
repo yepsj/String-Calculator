@@ -9,6 +9,7 @@ namespace StringCalculator
     public class StringCalculator
     {
         readonly string _input;
+        readonly string[] _defaultDelimiter = new string[] { ",", "\n" };
         public StringCalculator(string input)
         {
             _input = input;
@@ -17,11 +18,24 @@ namespace StringCalculator
         public int CalculateSum()
         {
             if (string.IsNullOrEmpty(_input)) return 0;
-            var numbers = _input.Split(new string[] { ",", "\n" }, StringSplitOptions.None);
+            var delimiters = _input.StartsWith("//") 
+                ? GetCustomDelimiter() 
+                : _defaultDelimiter;
+            var numbers = _input.Split(delimiters, StringSplitOptions.None);
             CheckForNegativeNumbers(numbers);
             return numbers.Sum(x => ParseNumber(x));
         }
-        
+
+        private string[] GetCustomDelimiter()
+        {
+            var delimiter = _input.IndexOf("\n") != 3
+                ? _defaultDelimiter
+                : new string[] { _input[2].ToString() };
+            _input.Remove(0, _input.IndexOf("\n"));
+            return delimiter;
+
+        }
+
         private void CheckForNegativeNumbers(string[] numbers)
         {
             var negativeNumbers = numbers.Where(x => ParseNumber(x) < 0);

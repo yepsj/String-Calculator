@@ -152,5 +152,20 @@ namespace StringCalculatorUnitTest
             // Assert
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void TestSingleCharacterDelimiter()
+        {
+            // Arrange
+            string input = "//;\n2;5";
+            var expected = 7;
+            var stringCalculator = new StringCalculator.StringCalculator(input);
+
+            // Act
+            var actual = stringCalculator.CalculateSum();
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
