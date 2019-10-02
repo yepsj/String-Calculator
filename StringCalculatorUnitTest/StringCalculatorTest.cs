@@ -68,11 +68,11 @@ namespace StringCalculatorUnitTest
         }
 
         [TestMethod]
-        public void TestMoreThanTwoInputs()
+        public void TestOneInput()
         {
             // Arrange
-            string input = "5,5,1000,1000";
-            var expected = 2010;
+            string input = "5";
+            var expected = 5;
             var stringCalculator = new StringCalculator.StringCalculator(input);
 
             // Act
@@ -83,11 +83,26 @@ namespace StringCalculatorUnitTest
         }
 
         [TestMethod]
-        public void TestOneInput()
+        public void TestTwoDelimiters()
         {
             // Arrange
-            string input = "5";
-            var expected = 5;
+            string input = "1\n2,3";
+            var expected = 6;
+            var stringCalculator = new StringCalculator.StringCalculator(input);
+
+            // Act
+            var actual = stringCalculator.CalculateSum();
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestSingleDelimiterWithEmptyEntry()
+        {
+            // Arrange
+            string input = "1\n2,";
+            var expected = 3;
             var stringCalculator = new StringCalculator.StringCalculator(input);
 
             // Act
