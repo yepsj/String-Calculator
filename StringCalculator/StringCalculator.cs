@@ -8,7 +8,7 @@ namespace StringCalculator
 {
     public class StringCalculator
     {
-        readonly string _input;
+        private string _input;
         readonly string[] _defaultDelimiter = new string[] { ",", "\n" };
         public StringCalculator(string input)
         {
@@ -28,12 +28,12 @@ namespace StringCalculator
 
         private string[] GetCustomDelimiter()
         {
-            var delimiter = _input.IndexOf("\n") != 3
-                ? _defaultDelimiter
-                : new string[] { _input[2].ToString() };
-            _input.Remove(0, _input.IndexOf("\n"));
-            return delimiter;
-
+            var delimiter = _input.Contains("//[")
+                ? _input.Substring(3, _input.IndexOf("]\n") - 3)
+                : _input[2].ToString();
+            var indexof = _input.IndexOf("\n");
+            _input = _input.Remove(0, _input.IndexOf("\n") + 1);
+            return new string[] { delimiter };
         }
 
         private void CheckForNegativeNumbers(string[] numbers)
