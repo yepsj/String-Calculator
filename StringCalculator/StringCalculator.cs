@@ -9,6 +9,10 @@ namespace StringCalculator
     public class StringCalculator
     {
         private string _input;
+        private readonly int _defaultNumber = 0;
+        private readonly string _openDelimiter = "[";
+        private readonly string _closeDelimiter = "]";
+        private readonly string _customDelimiterFlag = "//";
         readonly string[] _defaultDelimiter = new string[] { ",", "\n" };
         public StringCalculator(string input)
         {
@@ -17,31 +21,45 @@ namespace StringCalculator
 
         public int CalculateSum()
         {
-            if (string.IsNullOrEmpty(_input)) return 0;
+            if (string.IsNullOrEmpty(_input)) return _defaultNumber;
             var delimiters = _input.StartsWith("//") 
-                ? GetCustomDelimiter() 
+                ? GetCustomDelimiter()
                 : _defaultDelimiter;
             var numbers = _input.Split(delimiters, StringSplitOptions.None);
-            CheckForNegativeNumbers(numbers);
-            return numbers.Sum(x => ParseNumber(x));
+            var parsedNumbers = numbers.Select(x => ParseNumber(x)).ToList();
+            CheckForNegativeNumbers(parsedNumbers);
+            return parsedNumbers.Sum();
         }
 
         private string[] GetCustomDelimiter()
         {
-            var delimiter = _input.Contains("//[")
-                ? _input.Substring(3, _input.IndexOf("]\n") - 3)
-                : _input[2].ToString();
-            var indexof = _input.IndexOf("\n");
-            _input = _input.Remove(0, _input.IndexOf("\n") + 1);
-            return new string[] { delimiter };
+            var delimiters = new List<string>();
+            // Multiple characters or multiple custom delimiters
+            if (_input.Contains(_customDelimiterFlag + _openDelimiter))
+            {
+                _input = _input.Remove(0, _input.IndexOf(_customDelimiterFlag) + 2);
+                while (_input.IndexOf("\n") > 1)
+                {
+                    // Remove first bracket
+                    _input = _input.Remove(0, 1);
+                    delimiters.Add(_input.Substring(0, _input.IndexOf(_closeDelimiter)));
+                    _input = _input.Remove(0, _input.IndexOf(_closeDelimiter) + 1);
+                }
+                _input = _input.Remove(0, _input.IndexOf("\n") + 1);
+            }
+            // Single character custom delimiter
+            else
+            {
+                delimiters.Add(_input[2].ToString());
+            }
+            return delimiters.ToArray();
         }
 
-        private void CheckForNegativeNumbers(string[] numbers)
+        private void CheckForNegativeNumbers(List<int> numbers)
         {
-            var negativeNumbers = numbers.Where(x => ParseNumber(x) < 0);
-            if (negativeNumbers.Any())
+            if (numbers.Any(x => x < 0))
             {
-                throw new ArgumentOutOfRangeException($"Unable to process negative numbers: {string.Join(", ", negativeNumbers)}");
+                throw new ArgumentOutOfRangeException($"Unable to process negative numbers: {string.Join(", ", numbers.Where(x => x < 0))}");
             }
         }
         
@@ -51,11 +69,11 @@ namespace StringCalculator
             {
                 return (int.TryParse(number.Trim(), out var result) && result < 1000) 
                     ? result
-                    : 0;
+                    : _defaultNumber;
             }
             catch
-            {
-                return 0;
+            { 
+                return _defaultNumber;
             }
         }
     }

@@ -197,5 +197,50 @@ namespace StringCalculatorUnitTest
             // Assert
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void TestMultipleDelimiters()
+        {
+            // Arrange
+            string input = "//[**][((]\n11((22**33";
+            var expected = 66;
+            var stringCalculator = new StringCalculator.StringCalculator(input);
+
+            // Act
+            var actual = stringCalculator.CalculateSum();
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestMultipleDelimitersWithLargeNumber()
+        {
+            // Arrange
+            string input = "//[**][((]\n11((22**33**500000**10";
+            var expected = 76;
+            var stringCalculator = new StringCalculator.StringCalculator(input);
+
+            // Act
+            var actual = stringCalculator.CalculateSum();
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestMultipleDelimitersWithCharacters()
+        {
+            // Arrange
+            string input = "//[*][!!][r9r]\n11r9r22*33!!44";
+            var expected = 110;
+            var stringCalculator = new StringCalculator.StringCalculator(input);
+
+            // Act
+            var actual = stringCalculator.CalculateSum();
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
