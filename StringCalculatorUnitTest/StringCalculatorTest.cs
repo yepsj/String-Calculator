@@ -111,5 +111,31 @@ namespace StringCalculatorUnitTest
             // Assert
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void TestNegativeNumbers()
+        {
+            // Arrange
+            string input = "-50,100,-100,200";
+            var expectedExceptionMessage = "Unable to process negative numbers: -50, -100";
+            var stringCalculator = new StringCalculator.StringCalculator(input);
+
+            // Act
+            try
+            {
+                var actual = stringCalculator.CalculateSum();
+                // Fail if no exception thrown
+                Assert.Fail();
+            }
+            // Assert
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Assert.IsTrue(ex.Message.Contains(expectedExceptionMessage));
+            }
+            catch (Exception)
+            {
+                Assert.Fail();
+            }
+        }
     }
 }

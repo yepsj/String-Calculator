@@ -18,8 +18,19 @@ namespace StringCalculator
         {
             if (string.IsNullOrEmpty(_input)) return 0;
             var numbers = _input.Split(new string[] { ",", "\n" }, StringSplitOptions.None);
+            CheckForNegativeNumbers(numbers);
             return numbers.Sum(x => ParseNumber(x));
         }
+        
+        private void CheckForNegativeNumbers(string[] numbers)
+        {
+            var negativeNumbers = numbers.Where(x => ParseNumber(x) < 0);
+            if (negativeNumbers.Any())
+            {
+                throw new ArgumentOutOfRangeException($"Unable to process negative numbers: {string.Join(", ", negativeNumbers)}");
+            }
+        }
+        
         private int ParseNumber(string number)
         {
             try
